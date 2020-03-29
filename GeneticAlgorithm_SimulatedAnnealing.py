@@ -299,40 +299,42 @@ def bipartiteMatch(graph):
 
 
 def mutation(pop, conflict_sets, unavailability_mut):
-    default = set()
-    timeslot_fitness = []
-    for c in range(number_of_classroom):
-        for t in range(timeslots):
-            lec1 = pop[c][t]
-            tmp_sum = 0
-            if (lec1 != "-1"):
-                if (t in unavailability_mut.get(lec1,default)):
-                    tmp_sum += 1
-                for cc in range(number_of_classroom):
-                    if ((cc != c) & ((lec1, pop[cc][t]) in conflict_sets)):
+    mutation_rate = random.randint(1,10)
+    if (mutation_rate == 6):
+        default = set()
+        timeslot_fitness = []
+        for c in range(number_of_classroom):
+            for t in range(timeslots):
+                lec1 = pop[c][t]
+                tmp_sum = 0
+                if (lec1 != "-1"):
+                    if (t in unavailability_mut.get(lec1,default)):
                         tmp_sum += 1
-            timeslot_fitness.append(tmp_sum)
-    max_conflicted_index = timeslot_fitness.index(max(timeslot_fitness))
-    room_index = max_conflicted_index/timeslots
-    time_index = max_conflicted_index%timeslots
-    conflict_in_each_timeslot = []
-    room_time_index = []
-    lec1 = pop[room_index][time_index]
-    for c in range(number_of_classroom):
-        for t in range(timeslots):
-            tmp_sum = 0
-            if (pop[c][t] == "-1"):
-                if (t in unavailability_mut.get(lec1,default)):
-                    tmp_sum += 1
-                for cc in range(number_of_classroom):
-                    if ((cc != c) & ((lec1, pop[cc][t]) in conflict_sets)):
+                    for cc in range(number_of_classroom):
+                        if ((cc != c) & ((lec1, pop[cc][t]) in conflict_sets)):
+                            tmp_sum += 1
+                timeslot_fitness.append(tmp_sum)
+        max_conflicted_index = timeslot_fitness.index(max(timeslot_fitness))
+        room_index = max_conflicted_index/timeslots
+        time_index = max_conflicted_index%timeslots
+        conflict_in_each_timeslot = []
+        room_time_index = []
+        lec1 = pop[room_index][time_index]
+        for c in range(number_of_classroom):
+            for t in range(timeslots):
+                tmp_sum = 0
+                if (pop[c][t] == "-1"):
+                    if (t in unavailability_mut.get(lec1,default)):
                         tmp_sum += 1
-                conflict_in_each_timeslot.append(tmp_sum)
-                room_time_index.append([c, t])
-    new_room = room_time_index[conflict_in_each_timeslot.index(min(conflict_in_each_timeslot))][0]
-    new_timeslot = room_time_index[conflict_in_each_timeslot.index(min(conflict_in_each_timeslot))][1]
-    pop[new_room][new_timeslot] = pop[room_index][time_index]
-    pop[room_index][time_index] = "-1"
+                    for cc in range(number_of_classroom):
+                        if ((cc != c) & ((lec1, pop[cc][t]) in conflict_sets)):
+                            tmp_sum += 1
+                    conflict_in_each_timeslot.append(tmp_sum)
+                    room_time_index.append([c, t])
+        new_room = room_time_index[conflict_in_each_timeslot.index(min(conflict_in_each_timeslot))][0]
+        new_timeslot = room_time_index[conflict_in_each_timeslot.index(min(conflict_in_each_timeslot))][1]
+        pop[new_room][new_timeslot] = pop[room_index][time_index]
+        pop[room_index][time_index] = "-1"
     return pop
 ##########################
 #######  Crossover #######
