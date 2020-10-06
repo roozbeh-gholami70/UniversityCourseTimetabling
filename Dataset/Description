@@ -1,5 +1,4 @@
-
-Each instance is in a single file, containing a file header and four sections: courses, rooms, curricula, and constraints. 
+Each folder contains 7 instances. Each instance is in a single file, containing a file header and four sections: courses, rooms, curricula, and constraints. 
 The header provides all scalar values and each section provides the arrays for that specific aspect of the problem. 
 The exact format is shown by the following example (for a tiny instance):
 
