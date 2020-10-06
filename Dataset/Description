@@ -1,3 +1,4 @@
+These instances are the 3rd track (Curriculum Based Course Timetabling) of the well-known dataset of International Timetabling Competition (ITC) 2007 http://www.cs.qub.ac.uk/itc2007/ used for testing the performance of methods.
 Each folder contains 7 instances. Each instance is in a single file, containing a file header and four sections: courses, rooms, curricula, and constraints. 
 The header provides all scalar values and each section provides the arrays for that specific aspect of the problem. 
 The exact format is shown by the following example (for a tiny instance):
